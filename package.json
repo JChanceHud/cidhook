@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "cidhook": "cmd.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JChanceHud/cidhook.git"
@@ -15,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/JChanceHud/cidhook/issues"
   },
-  "homepage": "https://github.com/JChanceHud/cidhook#readme"
+  "homepage": "https://github.com/JChanceHud/cidhook#readme",
+  "dependencies": {
+    "node-fetch": "^2.3.0"
+  }
 }
