@@ -21,7 +21,7 @@ fetch(`${domain}/${cid}`, {
 })
   .then(res => {
     if (res.status !== 204) {
-      console.log(`Non-204 response received: ${res.status})`);
+      console.log(`Non-204 response received: ${res.status}`);
       process.exit(1);
     }
     console.log(`cid ${cid} successfully ${method === 'DELETE' ? 'un-' : ''}pinned`)
