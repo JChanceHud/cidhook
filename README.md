@@ -1,6 +1,6 @@
-# cidhook
+# cidhook ![](https://img.shields.io/npm/v/cidhook.svg)
 
-A cli tool for interacting with a [cidhookd](https://github.com/jchancehud/cidhookd) server.
+A tool for easily pinning IPFS cids from ephemeral environments (like CI, local machine, etc). Interacts with a [cidhookd](https://github.com/jchancehud/cidhookd) server.
 
 ## Usage
 
