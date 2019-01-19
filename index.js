@@ -20,8 +20,8 @@ async function pin(_domain, _cid, _options = {}) {
   const response = await fetch(`${domain}/${cid}`, Object.assign({
     method: 'POST'
   }, _options));
-  if (res.status !== 204) {
-    throw new Error(`Non-204 response received: ${res.status}`);
+  if (response.status !== 204) {
+    throw new Error(`Non-204 response received: ${response.status}`);
   }
   return response;
 }
@@ -31,8 +31,8 @@ async function unpin(_domain, _cid, _options = {}) {
   const response = await fetch(`${domain}/${cid}`, Object.assign({
     method: 'DELETE'
   }, options));
-  if (res.status !== 204) {
-    throw new Error(`Non-204 response received: ${res.status}`);
+  if (response.status !== 204) {
+    throw new Error(`Non-204 response received: ${response.status}`);
   }
   return response;
 }
