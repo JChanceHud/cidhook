@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const fetch = require('node-fetch');
+const cidhook = require('.');
 const [ _, __, _domain, cid, _method ] = process.argv;
 
 const { CIDHOOK_SECRET } = process.env;
@@ -11,22 +11,23 @@ if (process.argv.length < 3) {
 }
 
 const domain = _domain.indexOf('http') === 0 ? _domain : `https://${_domain}`;
-const method = _method === 'unpin' ? 'DELETE' : 'POST';
 
-fetch(`${domain}/${cid}`, {
-  method,
-  headers: {
-    'Authorization': CIDHOOK_SECRET
-  }
-})
-  .then(res => {
-    if (res.status !== 204) {
-      console.log(`Non-204 response received: ${res.status}`);
+Promise.resolve()
+  .then(() => {
+    if (!_method || _method === 'pin') {
+      return cidhook.pin(domain, cid);
+    } else if (_method === 'unpin') {
+      return cidhook.unpin(domain, cid);
+    } else {
+      console.log(`Invalid command specified ${_method}`);
       process.exit(1);
     }
-    console.log(`cid ${cid} successfully ${method === 'DELETE' ? 'un-' : ''}pinned`)
+  })
+  .then(() => {
+    console.log(`cid ${cid} successfully updated (${_method})`);
+    process.exit(0);
   })
   .catch(err => {
-    console.log('Error', err);
+    console.log(err);
     process.exit(1);
   });
