@@ -3,6 +3,7 @@
   "version": "0.1.7",
   "description": "A cli for interacting with a cidhookd server",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
