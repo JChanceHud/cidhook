@@ -1,43 +1,40 @@
 const fetch = require('node-fetch');
 const isIPFS = require('is-ipfs');
 
-function parseArgs(_domain, cid) {
-  return Promise.resolve()
-    .then(() => {
-      if (!isIPFS.multihash(cid)) {
-        throw new Error(`Non-multihash cid supplied: ${cid}`);
-      }
-      const domain = _domain.indexOf('http') === 0 ? _domain : `https://${_domain}`
-      return { cid, domain };
-    });
+async function parseArgs(_domain, cid, options = {}) {
+  // Make sure the header options are merged with defaults
+  options.headers = Object.assign({
+    'Authorization': process.env.CIDHOOK_SECRET
+  }, options.headers);
+  // Make sure cid is a multihash
+  if (!isIPFS.multihash(cid)) {
+    throw new Error(`Non-multihash cid supplied: ${cid}`);
+  }
+  // Prepend https
+  const domain = _domain.indexOf('http') === 0 ? _domain : `https://${_domain}`
+  return { cid, domain };
 }
 
-function pin(_domain, _cid) {
-  return parseArgs(_domain, _cid)
-    .then(({ domain, cid }) => fetch(`${domain}/${cid}`, {
-      method: 'POST',
-      headers: {
-        'Authorization': process.env.CIDHOOK_SECRET
-      }
-    }))
-    .then(res => {
-      if (res.status === 204) return;
-      throw new Error(`Non-204 response received: ${res.status}`);
-    });
+async function pin(_domain, _cid, _options = {}) {
+  const { domain, cid, options } = await parseArgs(_domain, _cid, _options);
+  const response = await fetch(`${domain}/${cid}`, Object.assign({
+    method: 'POST'
+  }, _options));
+  if (res.status !== 204) {
+    throw new Error(`Non-204 response received: ${res.status}`);
+  }
+  return response;
 }
 
-function unpin(_domain, _cid) {
-  return parseArgs(_domain, _cid)
-    .then(({ domain, cid}) => fetch(`${domain}/${cid}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': process.env.CIDHOOK_SECRET
-      }
-    }))
-    .then(res => {
-      if (res.status === 204) return;
-      throw new Error(`Non-204 response received: ${res.status}`);
-    });
+async function unpin(_domain, _cid, _options = {}) {
+  const { domain, cid, options } = await parseArgs(_domain, _cid, _options);
+  const response = await fetch(`${domain}/${cid}`, Object.assign({
+    method: 'DELETE'
+  }, options));
+  if (res.status !== 204) {
+    throw new Error(`Non-204 response received: ${res.status}`);
+  }
+  return response;
 }
 
 module.exports = { pin, unpin };
