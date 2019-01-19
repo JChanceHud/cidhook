@@ -24,7 +24,7 @@ Promise.resolve()
     }
   })
   .then(() => {
-    console.log(`cid ${cid} successfully updated (${_method})`);
+    console.log(`cid ${cid} successfully updated (${_method || 'pin'})`);
     process.exit(0);
   })
   .catch(err => {
