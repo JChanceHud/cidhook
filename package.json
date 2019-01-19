@@ -23,5 +23,8 @@
   "dependencies": {
     "is-ipfs": "^0.4.8",
     "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.1.4"
   }
 }
