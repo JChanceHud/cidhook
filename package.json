@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/JChanceHud/cidhook#readme",
   "dependencies": {
+    "ipfs": "^0.34.2",
     "is-ipfs": "^0.4.8",
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.3.0",
+    "yargs": "^12.0.5"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.1.4"
