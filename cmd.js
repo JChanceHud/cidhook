@@ -1,27 +1,27 @@
 #!/usr/bin/env node
 
 const cidhook = require('.');
+const yargs = require('yargs');
 
-require('yargs')
-  .command('pin <server> <cid>', 'pin an item', yargs =>
-    yargs
+yargs
+  .command('pin <cid>', 'pin an item', _yargs =>
+    _yargs
       .positional('cid', {
         describe: 'the content id to be pinned'
-      })
-      .positional('server', {
-        describe: 'the cidhookd server url, example: http://localhost:3000'
       }),
     argv => cidhook.pin(argv.server, argv.cid))
   .command(
-    'unpin <server> <cid>', 'unpin an item', yargs =>
-      yargs
+    'unpin <cid>', 'unpin an item', _yargs =>
+      _yargs
         .positional('cid', {
           describe: 'the content id to be unpinned'
-        })
-        .positional('server', {
-          describe: 'the cidhookd server url, example: http://localhost:3000'
         }),
     argv => cidhook.unpin(argv.server, argv.cid))
+  .option('server', {
+    alias: 's',
+    default: 'http://localhost:3000'
+  })
+  .demandCommand(1, 'You need a command to operate')
   .argv
 
   // console.log(`cid ${cid} successfully updated: (${method || 'pin'})`);
