@@ -10,6 +10,7 @@ yargs
         describe: 'the content id to be pinned'
       }),
     async argv => {
+      console.log(`Pinning cid: ${argv.cid} on ${argv.server}`);
       await cidhook.pin(argv.server, argv.cid);
       console.log(`cid ${argv.cid} successfully updated: (pin)`);
     })
@@ -20,6 +21,7 @@ yargs
           describe: 'the content id to be unpinned'
         }),
     async argv => {
+      console.log(`Unpinning cid: ${argv.cid} on ${argv.server}`);
       await cidhook.unpin(argv.server, argv.cid);
       console.log(`cid ${argv.cid} successfully updated: (unpin)`);
     })
